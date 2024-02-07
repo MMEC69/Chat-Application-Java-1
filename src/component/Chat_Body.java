@@ -5,6 +5,8 @@
 package component;
 
 import java.awt.Color;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 import swing.ScrollBar;
 
@@ -35,15 +37,18 @@ public class Chat_Body extends javax.swing.JPanel {
         addItemRight("I tried to use jTextPane1.setText(\"xxx xxxx xxx xxxxx xx xxx xxxx xxx etc...\"); but JTextPane does not word wrap it at all showing all the text in one line only instead. It would be interesting to support word wrap on jTextPane1 resized too...");
         addItemRight("Hello" +"gg" +"\ngg");
         addDate("10/02/2023");
-        addItemLeft("Hello" +"gg" +"\ngg", "Gojo");
-        addItemRight("I tried to use jTextPane1.setText(\"xxx xxxx xxx xxxxx xx xxx xxxx xxx etc...\"); but JTextPane does not word wrap it at all showing all the text in one line only instead. It would be interesting to support word wrap on jTextPane1 resized too...");
+        addItemLeft("Hello" +"gg" +"\ngg", "Gojo", new ImageIcon(getClass().getResource("/icon/testing/pro.png")));
+        addItemRight("I tried to use jTextPane1.setText(\"xxx xxxx xxx xxxxx xx xxx xxxx xxx etc...\"); but JTextPane does not word wrap it at all showing all the text in one line only instead. It would be interesting to support word wrap on jTextPane1 resized too...", new ImageIcon(getClass().getResource("/icon/testing/gojo.png")));
         addItemRight("Hello" +"gg" +"\ngg");
         addDate("10/02/2023");
         addItemLeft("Hello" +"gg" +"\ngg", "Kenjaku");
         addItemRight("I tried to use jTextPane1.setText(\"xxx xxxx xxx xxxxx xx xxx xxxx xxx etc...\"); but JTextPane does not word wrap it at all showing all the text in one line only instead. It would be interesting to support word wrap on jTextPane1 resized too...");
-        addItemRight("Hello" +"gg" +"\ngg");
+        addItemRight("Hello" +"gg" +"\ngg", new ImageIcon(getClass().getResource("/icon/testing/gojo.png")));
         addDate("Today");
-        addItemLeft("Hello" +"gg" +"\ngg", "Mahito");
+        addItemLeft("Hello" +"gg" +"\ngg", "Mahito", new ImageIcon(getClass().getResource("/icon/testing/pro.png")),  new ImageIcon(getClass().getResource("/icon/testing/gojo.png")));
+        addItemLeft("" , "Mahito", new ImageIcon(getClass().getResource("/icon/testing/gojo.png")));
+
+    
     }
     
     private void init(){
@@ -52,18 +57,23 @@ public class Chat_Body extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
     
-    public void addItemLeft(String text, String user){
+    public void addItemLeft(String text, String user, Icon ...image){
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
-        item.setUserProfile(user);
         item.setText(text);
+        item.setImage(image);
+        item.setTime();
+        item.setUserProfile(user);
+        
         body.add(item, "wrap, w 100::80%");
         body.repaint();
         body.revalidate();
+        
     }
     
-    public void addItemRight(String text){
+    public void addItemRight(String text, Icon ...image){
         Chat_Right item = new Chat_Right();
         item.setText(text);
+        item.setImage(image);
         body.add(item, "wrap, al right, w 100::80%");
         body.repaint();
         body.revalidate();

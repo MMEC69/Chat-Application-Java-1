@@ -22,10 +22,21 @@ public class Chat_Left_With_Profile extends javax.swing.JLayeredPane {
     }
     
     public void setText(String text){
-        txt.setText(text);
-        txt.setTime("10.30 PM");
-        txt.sendSuccess();
-        
+        if(text.equals("")){
+            txt.hideText();
+        }
+        else{
+            txt.setText(text);
+        }
+         
+    }
+    
+    public void setImage(Icon... image){
+        txt.setImage(false, image);
+    }
+    
+    public void setTime(){
+        txt.setTime("10:30 PM"); //Testing
     }
     
     public void setUserProfile(String user){
@@ -35,6 +46,8 @@ public class Chat_Left_With_Profile extends javax.swing.JLayeredPane {
     public void setImageProfile(Icon image){
         iaImage.setImage(image);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
