@@ -4,8 +4,11 @@
  */
 package main;
 
+import event.EventImageView;
+import event.PublicEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import swing.ComponentResizer;
@@ -22,6 +25,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         init();
+        
     }
     
     public void init(){
@@ -31,6 +35,24 @@ public class Main extends javax.swing.JFrame {
         com.setMinimumSize(new Dimension (800,500));
         com.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         com.setSnapSize(new Dimension(10,10));
+        view_Image.setVisible(false);
+        home1.setVisible(true);
+        initEvent();
+    }
+    
+    private void initEvent(){
+        PublicEvent.getInstance().addEventImageView(new EventImageView() {
+            @Override
+            public void viewImage(Icon image) {
+                view_Image.viewImage(image);
+            }
+
+            @Override
+            public void saveImage(Icon image) {
+                System.out.println("Save Image next update");
+            }
+            
+        });
     }
      
 
@@ -48,9 +70,12 @@ public class Main extends javax.swing.JFrame {
         title = new javax.swing.JPanel();
         cmdClose = new javax.swing.JButton();
         cmdMinimize = new javax.swing.JButton();
+        body = new javax.swing.JLayeredPane();
+        view_Image = new form.ViewImage();
         home1 = new form.Home();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -99,7 +124,7 @@ public class Main extends javax.swing.JFrame {
         titleLayout.setHorizontalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleLayout.createSequentialGroup()
-                .addContainerGap(996, Short.MAX_VALUE)
+                .addContainerGap(857, Short.MAX_VALUE)
                 .addComponent(cmdMinimize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmdClose, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,22 +135,28 @@ public class Main extends javax.swing.JFrame {
             .addComponent(cmdClose, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        body.setLayout(new java.awt.CardLayout());
+        body.setLayer(view_Image, javax.swing.JLayeredPane.POPUP_LAYER);
+        body.add(view_Image, "card3");
+        body.add(home1, "card2");
+
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(home1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(3, 3, 3))
+                .addContainerGap()
+                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(home1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout borderLayout = new javax.swing.GroupLayout(border);
@@ -133,13 +164,16 @@ public class Main extends javax.swing.JFrame {
         borderLayout.setHorizontalGroup(
             borderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(borderLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
+                .addGap(10, 10, 10)
                 .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+                .addContainerGap())
         );
         borderLayout.setVerticalGroup(
             borderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(borderLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,10 +249,12 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JLayeredPane body;
     private javax.swing.JPanel border;
     private javax.swing.JButton cmdClose;
     private javax.swing.JButton cmdMinimize;
     private form.Home home1;
     private javax.swing.JPanel title;
+    private form.ViewImage view_Image;
     // End of variables declaration//GEN-END:variables
 }
